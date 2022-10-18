@@ -1,14 +1,14 @@
 # Sistema de incurridos
-Facilita mantener un control del tiempo dedicado a las tareas de la semana.
+Facilita contabilizar el tiempo dedicado a las tareas de la semana en horas.
 
 <br/>
 
-<img src="https://github.com/bitasuperactive/ControlDeIncurridos/blob/main/doc/demostracion.gif"/>
+<img src="https://github.com/bitasuperactive/SistemaDeIncurridos/blob/main/doc/demostracion.gif"/>
 
 
 ## Descripción
 <br/>
-<img src="https://github.com/bitasuperactive/ControlDeIncurridos/blob/main/doc/descripcion.png">
+<img src="https://github.com/bitasuperactive/SistemaDeIncurridos/blob/main/doc/descripcion.png">
 
 <h3>:one: Cronómetro</h3>
 Contabiliza el tiempo transcurrido.
@@ -39,9 +39,9 @@ Almacenan el tiempo incurrido.
 ## Guías
 
 <details><summary> <h3>Cómo añadir nuevas tareas a incurrir</h3></summary>
-<img src="https://github.com/bitasuperactive/ControlDeIncurridos/blob/main/doc/como_a%C3%B1adir_nuevas_tareas.gif">
+<img src="https://github.com/bitasuperactive/SistemaDeIncurridos/blob/main/doc/como_a%C3%B1adir_nuevas_tareas.gif">
 </details>
 
 <details><summary> <h3>Cómo incurrir esas nuevas tareas</h3></summary>
-<img src="https://github.com/bitasuperactive/ControlDeIncurridos/blob/main/doc/como_incurrir_nuevas_tareas.gif">
+<img src="https://github.com/bitasuperactive/SistemaDeIncurridos/blob/main/doc/como_incurrir_nuevas_tareas.gif">
 </details>
