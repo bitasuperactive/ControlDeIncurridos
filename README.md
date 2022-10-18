@@ -34,6 +34,10 @@ Almacenan el tiempo incurrido.
  Nota: Al abrir el desplegable de la tarea a incurrir el cronómetro se congela.
  - <b>Recordatorio:</b> Lanza un mensaje de texto al usuario si lleva más de 10 minutos sin incurrir ninguna tarea.
  - <b>Guardado de seguridad:</b> Si se cierra el workbook mientras se está incurriendo una tarea, esta se registrará en su celda correspondiente evitando la pérdida del conteo.
+ 
+ 
+ ## Limitaciones
+ - Solo se admite un máximo de 50 tareas a incurrir.
 
 
 ## Guías
