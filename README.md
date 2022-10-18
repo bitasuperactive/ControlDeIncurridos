@@ -1,5 +1,5 @@
 # Sistema de incurridos
-Facilita contabilizar el tiempo dedicado a las tareas de la semana en horas.
+Facilita contabilizar, en horas, el tiempo dedicado a las tareas de la semana.
 
 <br/>
 
