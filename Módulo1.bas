@@ -1,80 +1,107 @@
 Attribute VB_Name = "Módulo1"
-Public weekNumCell As String
-Public targetRange As String
-Public timerCell As String
+' Celda que almacena el tiempo incurrido (cronómetro).
+Public timerRange As String
+' Celda que almacena la tarea a incurrir.
+Public incurredTaskRange As String
+' Celda que almacena el número de la semana actual del año.
+Public weekNumRange As String
+' Celda que almacena la jornada laboral del usuario.
+Public dailyShiftRange As String
+' Rango de celdas que almacenan los tiempos incurridos durante la semana.
+Public incurredTimesRange As String
+' Tarea que se está incurriendo.
+Public incurredTask As String
+' Cronómetro encendido.
 Public timerOn As Boolean
-Public taskCell As String
-Public task As String
 
+' Establece la actualización del cronómetro.
 Public Sub SetTimer()
 
     Application.OnTime Now + TimeValue("00:00:01"), "MoveTimer"
 
 End Sub
 
+' Actualiza la celda del cronómetro y el texto de la barra de estado,
+' además de volver a llamar a la función "SetTimer()", generando un bucle.
 Public Sub MoveTimer()
     
     If (timerOn = True) Then
-        Worksheets(1).Range(timerCell).Value = Worksheets(1).Range(timerCell).Value + TimeValue("00:00:01")
-        Application.StatusBar = task + ": " + Format(Range(timerCell).Value, "hh:mm:ss")
+        Worksheets(1).range(timerRange).Value = Worksheets(1).range(timerRange).Value + TimeValue("00:00:01")
+        Application.StatusBar = incurredTask + ": " + Format(range(timerRange).Value, "hh:mm:ss")
         Call SetTimer
     End If
 
 End Sub
 
+' Restablece el cronómetro y, si corresponde, la barra de estado.
 Public Sub ResetTimer()
     
     If (timerOn = False) Then
-        Worksheets(1).Range(timerCell).Value = TimeValue("00:00:00")
+        Worksheets(1).range(timerRange).Value = TimeValue("00:00:00")
         Application.StatusBar = "No estas realizando ninguna tarea."
     Else
-        Worksheets(1).Range(timerCell).Value = TimeValue("00:00:01")
+        Worksheets(1).range(timerRange).Value = TimeValue("00:00:01")
     End If
 
 End Sub
 
-' Actualiza la celda correspondiente a la tarea y al día de la semana con el tiempo incurrido.
-Public Sub SetCell()
+' Suma el tiempo incurrido a la celda correspondiente a la tarea y al día de la semana.
+' Devuelve el rango de la celda mencionada.
+Public Function SetCell() As String
     
     Dim row As Integer
     Dim column As Integer
+    Dim incurredTime As Double
     
     For row = 9 To 50
-        If (Cells(row, 2).Value = task Or Cells(row, 2).Value = "") Then
+        If (Cells(row, 2).Value = incurredTask Or Cells(row, 2).Value = "") Then
             Exit For
         End If
     Next
     
     column = Weekday(Date, 2) + 2
     
-    Cells(row, column).Value = Cells(row, column).Value + Worksheets(1).Range(timerCell).Value * 24
+    incurredTime = Worksheets(1).range(timerRange).Value * 24
     
-End Sub
+    Cells(row, column).Value = Cells(row, column).Value + incurredTime
+    
+    Dim incurredTimesRange As String
+    incurredTimesRange = Cells(row, column).Address(RowAbsolute:=False, ColumnAbsolute:=False)
+    
+    SetCell = incurredTimesRange
+    
+End Function
 
-' Redondea el tiempo incurrido en la última tarea si faltan 10 minutos o menos para completar la jornada laboral.
-' * [Método no implemetado]
-' Falta por implementar una forma de que el usuario introduzca su jornada.
-Public Sub RoundResult()
-
-    Dim row As Integer
-    Dim column As Integer
+' Redondea el tiempo incurrido de la última tarea si faltan 15 o menos minutos para completar la jornada laboral.
+' incurredTimesRange: Rango de la celda a redondear.
+Public Sub RoundResult(incurredTimesRange As String)
     
-    row = 7
-    column = Weekday(Date, 2) + 2
+    Dim dailyShift As Double
+    dailyShift = Worksheets(1).range(dailyShiftRange).Value
     
-    If (Cells(row, column).Value < 7.5 And Cells(row, column).Value >= 7.33) Then
-        Worksheets(1).Range(timerCell).Value = (7.5 - Cells(row, column).Value) / 24
-        Call SetCell
+    If (range(incurredTimesRange).Value < dailyShift And range(incurredTimesRange).Value >= (dailyShift - 0.25)) Then
+        range(incurredTimesRange).Value = range(incurredTimesRange).Value + (dailyShift - range(incurredTimesRange).Value)
     End If
 
 End Sub
 
-' Lanza un mensaje de recordatorio cada 10 minutos si no se está incurriendo ninguna tarea.
+' Lanza un mensaje de aviso si no se está incurriendo ninguna tarea.
 Public Sub Reminder()
     
-    If (task = "") Then
-        MsgBox "No estas incurriendo ninguna tarea.", vbExclamation, "Incurridos Excel"
-        Application.OnTime Now + TimeValue("00:10:00"), "Reminder"
+    If (incurredTask = "") Then
+        MsgBox "No estas incurriendo ninguna tarea.", vbExclamation, "Sistema de incurridos"
     End If
     
+End Sub
+
+' Pregunta la jornada laboral del usuario para hacer uso de la función "RoundResult()".
+Public Sub AskDailyShift()
+
+    Worksheets(1).range(dailyShiftRange).Value = Application.InputBox("Por favor, introduce tu jornada laboral en horas." + _
+    vbCrLf + "Por ejemplo: 7,5", "Sistema de incurridos", Type:=1)
+    
+    If (Worksheets(1).range(dailyShiftRange).Value = FALSO) Then
+        Worksheets(1).range(dailyShiftRange).Value = 0
+    End If
+
 End Sub
