@@ -22,7 +22,8 @@ Solo aparecerán aquellas tareas introducidas en el cuadro inferior (5).
 Para añadir nuevas tareas se deben escribir en la columna A del worksheet "Tareas".
 <h3>:six: Suma total del tiempo incurrido</h3>
 <h3>:seven: Semana del año</h3>
-Cuando la semana termina, se borran los tiempos incurridos.
+Cuando la semana termina, se borran los tiempos incurridos.  <br/>
+<b>En la versión v0.2-beta se ha ocultado este valor en la celda "B1".</b> En su lugar se muestra la jornada laboral introducida por el usuario.
 <h3>:hash: Resto de celdas sin resaltar</h3>
 Almacenan el tiempo incurrido.
 
