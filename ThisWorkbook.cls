@@ -56,7 +56,9 @@ Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As range)
         If (incurredTask <> "") Then
             Target = incurredTask
         Else
-            Target = Worksheets(2).Cells(1, 1).Value
+            If (Worksheets(2).Cells(1, 1).Value <> "") Then
+                Target = Worksheets(2).Cells(1, 1).Value
+            End If
         End If
     End If
     
