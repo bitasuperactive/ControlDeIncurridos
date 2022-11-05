@@ -8,7 +8,7 @@ Public weekNumRange As String
 ' Celda que almacena la jornada laboral del usuario.
 Public dailyShiftRange As String
 ' Rango de celdas que almacenan los tiempos incurridos durante la semana.
-Public incurredTimesRange As String
+Public lastIncurredRange As String
 ' Tarea que se está incurriendo.
 Public incurredTask As String
 ' Cronómetro encendido.
@@ -65,22 +65,21 @@ Public Function SetCell() As String
     
     Cells(row, column).Value = Cells(row, column).Value + incurredTime
     
-    Dim incurredTimesRange As String
-    incurredTimesRange = Cells(row, column).Address(RowAbsolute:=False, ColumnAbsolute:=False)
-    
-    SetCell = incurredTimesRange
+    SetCell = Cells(row, column).Address
     
 End Function
 
 ' Redondea el tiempo incurrido de la última tarea si faltan 15 o menos minutos para completar la jornada laboral.
-' incurredTimesRange: Rango de la celda a redondear.
-Public Sub RoundResult(incurredTimesRange As String)
+' lastIncurredRange: Rango de la celda a redondear.
+Public Sub RoundResult(lastIncurredRange As String)
     
     Dim dailyShift As Double
+    Dim todaysTotalIncurredTime As Double
     dailyShift = Worksheets(1).range(dailyShiftRange).Value
+    todaysTotalIncurredTime = Cells(7, range(lastIncurredRange).column).Value
     
-    If (range(incurredTimesRange).Value < dailyShift And range(incurredTimesRange).Value >= (dailyShift - 0.25)) Then
-        range(incurredTimesRange).Value = range(incurredTimesRange).Value + (dailyShift - range(incurredTimesRange).Value)
+    If (todaysTotalIncurredTime < dailyShift And todaysTotalIncurredTime >= (dailyShift - 0.25)) Then
+        range(lastIncurredRange).Value = range(lastIncurredRange).Value + (dailyShift - todaysTotalIncurredTime)
     End If
 
 End Sub
